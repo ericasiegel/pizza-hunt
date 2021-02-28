@@ -1,7 +1,12 @@
 // connect to the express Router
 const router = require('express').Router();
 // connect to the comment controllers
-const { addComment, removeComment } = require('../../controllers/comment-controller');
+const { 
+    addComment, 
+    removeComment,
+    addReply,
+    removeReply
+} = require('../../controllers/comment-controller');
 
 // /api/comments/:pizzaId
 router.route('/:pizzaId')
@@ -9,7 +14,12 @@ router.route('/:pizzaId')
 
 // /api/comments/pizzaId/commentId
 router.route('/:pizzaId/:commentId')
+    .put(addReply)
     .delete(removeComment);
 
+// remove the reply to the comment
+// "Go to this pizza, then look at this particular comment, then delete this one reply."
+router.route('/:pizzaId/:commentId/:replyId')
+    .delete(removeReply);
 
 module.exports = router;

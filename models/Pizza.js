@@ -53,7 +53,11 @@ const PizzaSchema = new Schema(
 // - they allow us to add more information to a database respons so that we don't have to add in the information manually with a helper before responding to the API request
 // get total count of comments and replies on retrieval
 PizzaSchema.virtual('commentCount').get(function () {
-    return this.comments.length;
+    //.reduce is being used to tally up the total of every comment with its replies
+    //.reduce takes two parameters, an "accumulator" (total) and a "currentValue" (comment)
+    //as .reduce walks through an array, it passes the accumulating total and the current value of comment into the function, with the return of the function revising the total for the next iteration through the array
+    //.reduce executes a function on each elememt in an array using the result of each function execution for each successive computation. Makes it the perfect candidate for getting a sum of multiple values
+    return this.comments.reduce((total, comment) => total + comment.replies.length + 1, 0);
 })
 
 
