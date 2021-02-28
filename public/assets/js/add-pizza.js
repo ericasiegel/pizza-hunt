@@ -67,6 +67,8 @@ const handlePizzaSubmit = event => {
     })
     .catch(err => {
       console.log(err);
+      // access idb.js upon connection failure and store the dtata using saveRecord()
+      saveRecord(formData)
     });
 };
 
