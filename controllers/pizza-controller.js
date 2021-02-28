@@ -67,7 +67,8 @@ const pizzaController = {
     // new:true returns the updated document, without it, it will return the original document.
     // by setting it to "true", we are instructing Mongoose to return the new verson of the document.
     updatePizza({ params, body }, res) {
-        Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true })
+        // use 'runValidators: true' so that when updating the pizza it knows to validate any new information
+        Pizza.findOneAndUpdate({ _id: params.id }, body, { new: true, runValidators: true })
             .then(dbPizzaData => {
                 if (!dbPizzaData) {
                     res.status(404).json({ message: "No pizza found with this id!" });
